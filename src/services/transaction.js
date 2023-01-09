@@ -43,6 +43,12 @@ exports.createTransferTransaction = async (src_acc, dest_acc, amount) => {
  * @returns the transaction details
  */
 exports.deposit = async (acc_num, amount) => {
+  if (!acc_num) {
+    return new AppError("input account number", 400);
+  }
+  if (!amount) {
+    return new AppError("input amount to deposit", 400);
+  }
   const account = await knex
     .select()
     .where("acc_num", acc_num)
@@ -50,7 +56,7 @@ exports.deposit = async (acc_num, amount) => {
 
   knex.transaction(async (trx) => {
     const newBal = account[0].balance + amount;
-    console.log(newBal);
+
     await knex("accounts")
       .where("acc_num", acc_num)
       .update({ balance: newBal })
@@ -58,6 +64,8 @@ exports.deposit = async (acc_num, amount) => {
       .then(trx.commit)
       .catch(trx.rollback);
   });
+
+  return "success";
 };
 
 /**
@@ -68,11 +76,20 @@ exports.deposit = async (acc_num, amount) => {
  */
 
 exports.withdraw = async (acc_num, amount) => {
+  if (!acc_num) {
+    return new AppError("input account number", 400);
+  }
+  if (!amount) {
+    return new AppError("input amount to withdraw", 400);
+  }
+
   const account = await knex
     .select()
     .where("acc_num", acc_num)
     .from("accounts");
-
+  if (account[0].balance < amount) {
+    new AppError("insufficient funds", 400);
+  }
   knex.transaction(async (trx) => {
     const newBal = account[0].balance - amount;
     await knex("accounts")
@@ -82,6 +99,8 @@ exports.withdraw = async (acc_num, amount) => {
       .then(trx.commit)
       .catch(trx.rollback);
   });
+
+  return "success";
 };
 
 /**
@@ -90,6 +109,10 @@ exports.withdraw = async (acc_num, amount) => {
  * @returns account banlance
  */
 exports.checkBalance = async (acc_num) => {
+  if (!acc_num) {
+    return new AppError("input account number", 400);
+  }
+
   const account = await knex
     .select()
     .where("acc_num", acc_num)
