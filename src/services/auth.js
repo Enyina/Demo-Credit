@@ -24,7 +24,6 @@ exports.createUser = async (data) => {
   });
   const user = await knex.select().where("id", id).from("users");
 
-  console.log(user[0]);
   return user[0];
 };
 
@@ -35,7 +34,7 @@ exports.createUser = async (data) => {
  * @returns newly created account
  */
 exports.createAccount = async (data, user) => {
-  const { acc_num, balance = 0.0 } = data;
+  const { acc_num, balance } = data;
 
   await knex("accounts").insert({
     acc_num,
@@ -46,5 +45,6 @@ exports.createAccount = async (data, user) => {
     .select()
     .where("acc_num", acc_num)
     .from("accounts");
-  return account;
+
+  return account[0];
 };
