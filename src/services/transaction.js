@@ -1,4 +1,4 @@
-const knex = require("../db/db");
+const knex = require("../database/db");
 const { v4: uuidv4 } = require("uuid");
 const AppError = require("../utils/AppError");
 

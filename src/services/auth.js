@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-const knex = require("../db/db");
+const knex = require("../database/db");
 
 const encryptPassword = async (password) => {
   return bcrypt.hash(password, 10);
