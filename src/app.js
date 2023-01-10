@@ -3,7 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const userRoutes = require("./routes/userRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
-const knex = require("./db/db");
+const knex = require("./database/db");
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
