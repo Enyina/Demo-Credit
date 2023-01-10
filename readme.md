@@ -10,6 +10,6 @@
 
 ### npm test to run tests
 
-![database diagram](https://drive.google.com/file/d/1rg20eOiQBmdo1fa8d9ajeQpfgghqcymG/view?usp=share_link)
+[database diagram](https://drive.google.com/file/d/1rg20eOiQBmdo1fa8d9ajeQpfgghqcymG/view?usp=share_link)
 
 #### main contributor- Matthew Enyina
