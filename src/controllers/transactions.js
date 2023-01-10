@@ -48,12 +48,12 @@ exports.sendFunds = catchAsync(async (req, res, next) => {
   const { amount, src_acc, dest_acc } = req.body;
   await withdraw(src_acc, amount);
   await deposit(dest_acc, amount);
-  const transaction = createTransferTransaction(src_acc, dest_acc, amount);
+  const transaction = await createTransferTransaction(src_acc, dest_acc, amount);
   const bal = await checkBalance(src_acc);
 
   if (!bal) {
     next(new AppError("error fetching try again later!"));
   }
 
-  sendRes(res, 200, "success", bal, transaction);
+  sendRes(res, 200, bal, transaction);
 });
